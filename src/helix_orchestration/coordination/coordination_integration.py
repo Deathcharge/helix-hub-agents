@@ -16,13 +16,13 @@ from fastapi import FastAPI
 
 # Routes/services loaded at app level, not from within coordination module
 try:
-    from apps.backend.routes.coordination_api import router as coordination_router
+    # from helix_core.routes.coordination_api import router as coordination_router
 except ImportError:
     coordination_router = None
 
 # Service registry is optional — coordination system works without it
 try:
-    from apps.backend.services.service_registry import ServiceRegistry
+    # from helix_core.services.service_registry import ServiceRegistry
 
     service_registry = ServiceRegistry()
     register_coordination_services = None  # Placeholder — registered at app startup

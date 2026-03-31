@@ -829,7 +829,7 @@ class CoordinationHub:
         # Fire-and-forget Redis call counter for usage telemetry.
         # Never blocks invocation — Redis failures are silently ignored.
         try:
-            from apps.backend.core.redis_client import get_redis
+            # from helix_core.core.redis_client import get_redis
 
             _redis = await get_redis()
             if _redis:

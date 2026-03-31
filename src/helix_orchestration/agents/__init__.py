@@ -1,9 +1,9 @@
 # Backend agents package
 # Re-exports from agents_service.py and agent_registry.py for backward compatibility
-# This allows 'from apps.backend.agents import Helix' to work seamlessly
+# This allows '# from helix_core.agents import Helix' to work seamlessly
 
 try:
-    from apps.backend.agents.agent_registry import AGENT_REGISTRY
+    # from helix_core.agents.agent_registry import AGENT_REGISTRY
 except ImportError:
     try:
         from .agent_registry import AGENT_REGISTRY
@@ -11,7 +11,7 @@ except ImportError:
         AGENT_REGISTRY = {}
 
 try:
-    from apps.backend.agents.agents_service import (
+    # from helix_core.agents.agents_service import (
         AGENTS,
         AetherAgent,
         Agni,

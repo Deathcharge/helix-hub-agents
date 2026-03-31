@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from typing import Dict, List
 
-from apps.backend.logging.helix_logger import get_logger
+# from helix_core.logging.helix_logger import get_logger
 
 logger = get_logger(__name__)
 

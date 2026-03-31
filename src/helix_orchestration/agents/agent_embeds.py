@@ -384,7 +384,7 @@ def get_collective_status(harmony: float = 0.93, friction: float = 0.07, active_
 
     # Add UCF state from real metrics
     try:
-        from apps.backend.coordination.ucf_state_loader import get_ucf_metrics
+        # from helix_core.coordination.ucf_state_loader import get_ucf_metrics
 
         _ucf = get_ucf_metrics()
         _velocity = _ucf.get("velocity", 0.0)

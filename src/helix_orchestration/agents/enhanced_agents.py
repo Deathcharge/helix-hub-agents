@@ -28,7 +28,7 @@ try:
     from .agents_service import Kael, Lumina, Vega
 except ImportError:
     try:
-        from apps.backend.agents.agents_service import Kael, Lumina, Vega
+        # from helix_core.agents.agents_service import Kael, Lumina, Vega
     except ImportError:
         logger = logging.getLogger(__name__)
         logger.warning("Base agents not available, enhanced agents will not work")
@@ -1435,7 +1435,7 @@ class EnhancedAether(CoordinationCoreMixin):
         class _AetherBaseAgent:
             async def process(self, query, context=None):
                 try:
-                    from apps.backend.helix_agent_swarm.agent_factory import create_agent
+                    # from helix_core.helix_agent_swarm.agent_factory import create_agent
 
                     agent = create_agent("Kael")  # Kael as orchestrator proxy
                     result = await agent.process_message(query)
@@ -1575,7 +1575,7 @@ class EnhancedVishwakarma(CoordinationCoreMixin):
         class _VishwakarmaBaseAgent:
             async def process(self, query, context=None):
                 try:
-                    from apps.backend.helix_agent_swarm.agent_factory import create_agent
+                    # from helix_core.helix_agent_swarm.agent_factory import create_agent
 
                     agent = create_agent("Vega")  # Vega as architect proxy
                     result = await agent.process_message(query)
@@ -1713,7 +1713,7 @@ class EnhancedCoordination(CoordinationCoreMixin):
         class _CoordinationBaseAgent:
             async def process(self, query, context=None):
                 try:
-                    from apps.backend.helix_agent_swarm.agent_factory import create_agent
+                    # from helix_core.helix_agent_swarm.agent_factory import create_agent
 
                     agent = create_agent("Lumina")  # Lumina as coordination proxy
                     result = await agent.process_message(query)

@@ -291,7 +291,7 @@ class AnalyticsService:
         Falls back to generating interpolated data from the current UCF state
         if no historical snapshots exist yet.
         """
-        from apps.backend.core.redis_client import redis_client
+        # from helix_core.core.redis_client import redis_client
 
         data_points = []
 
@@ -543,7 +543,7 @@ class AnalyticsService:
 
         # Try DB first for real performance data
         try:
-            from apps.backend.services.agent_performance_service import get_performance_service
+            # from helix_core.services.agent_performance_service import get_performance_service
 
             service = get_performance_service()
             duration_minutes = int((end_time - start_time).total_seconds() / 60)
@@ -582,7 +582,7 @@ class AnalyticsService:
 
         # Fallback: derive from UCF state
         try:
-            from apps.backend.coordination_engine import load_ucf_state
+            # from helix_core.coordination_engine import load_ucf_state
 
             ucf = load_ucf_state()
         except Exception as exc:

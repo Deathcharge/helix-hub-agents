@@ -9,11 +9,11 @@ import logging
 import os
 from pathlib import Path
 
-from apps.backend.agents import ArjunaAgent
-from apps.backend.config_manager import config
-from apps.backend.security.enhanced_kavach import EnhancedKavach
-from apps.backend.services.zapier_client_master import MasterZapierClient as ZapierClient
-from apps.backend.system_enhancement_utils import SystemEnhancer
+# from helix_core.agents import ArjunaAgent
+# from helix_core.config_manager import config
+# from helix_core.security.enhanced_kavach import EnhancedKavach
+# from helix_core.services.zapier_client_master import MasterZapierClient as ZapierClient
+# from helix_core.system_enhancement_utils import SystemEnhancer
 
 logger = logging.getLogger(__name__)
 

@@ -12,7 +12,7 @@ Wires together existing systems:
 - ethics/ethics_validator.py (ethics validation)
 
 Usage:
-    from apps.backend.agents.agent_access import (
+    # from helix_core.agents.agent_access import (
         get_authenticated_user,
         require_agent_access,
         validate_agent_ethics,
@@ -35,8 +35,8 @@ from typing import Any
 
 from fastapi import HTTPException, status
 
-from apps.backend.middleware.rbac import TIER_FEATURES, can_use_agent
-from apps.backend.saas.utils.dependencies import get_current_user
+# from helix_core.middleware.rbac import TIER_FEATURES, can_use_agent
+# from helix_core.saas.utils.dependencies import get_current_user
 
 logger = logging.getLogger(__name__)
 
@@ -125,7 +125,7 @@ async def resolve_llm_key(user, provider: str = "anthropic") -> str | None:
         API key string, or None if no key available (graceful fallback)
     """
     try:
-        from apps.backend.byok_management import get_effective_llm_key
+        # from helix_core.byok_management import get_effective_llm_key
 
         user_id = get_user_id_str(user)
         key = await get_effective_llm_key(user_id, provider)
@@ -179,7 +179,7 @@ async def validate_agent_ethics(
         HTTPException 403: Only for critical violations (nonmaleficence)
     """
     try:
-        from apps.backend.ethics.ethics_validator import EthicsValidator
+        # from helix_core.ethics.ethics_validator import EthicsValidator
 
         validator = EthicsValidator()
 

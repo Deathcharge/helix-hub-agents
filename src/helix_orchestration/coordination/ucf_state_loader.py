@@ -79,7 +79,7 @@ def get_default_state() -> dict:
     """Return UCF state from DB snapshot, or hardcoded defaults when unavailable"""
     # Try loading the most recent CoordinationSnapshot from the database
     try:
-        from apps.backend.db_models import CoordinationSnapshot, SessionLocal
+        # from helix_core.db_models import CoordinationSnapshot, SessionLocal
 
         db = SessionLocal()
         try:

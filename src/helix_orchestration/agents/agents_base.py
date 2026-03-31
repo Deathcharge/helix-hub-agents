@@ -56,7 +56,7 @@ if TYPE_CHECKING:
 
 # Import coordination framework from kael_coordination_core
 try:
-    from apps.backend.coordination.kael_core import (
+    # from helix_core.coordination.kael_core import (
         CoordinationCore,
         DecisionMakingAlgorithm,
         Emotions,

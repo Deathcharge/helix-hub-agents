@@ -11,7 +11,7 @@ Build: v15.3-coordination-profiles
 import logging
 from dataclasses import dataclass
 
-from apps.backend.coordination.kael_core import (
+# from helix_core.coordination.kael_core import (
     PersonalityTraits,
     Preferences,
 )

@@ -50,7 +50,7 @@ logger.propagate = False
 # Import Ethics Validator
 # Type imports for conditional availability
 try:
-    from apps.backend.core.ethics_validator import EthicsValidator
+    # from helix_core.core.ethics_validator import EthicsValidator
 
     ETHICS_AVAILABLE = True
     ETHICS_VALIDATOR: EthicsValidator | None = None
@@ -63,7 +63,7 @@ except ImportError as e:
 
 # Import Resonance Engine for agent reasoning tracking
 try:
-    from apps.backend.services.websocket_service import get_resonance_engine
+    # from helix_core.services.websocket_service import get_resonance_engine
 
     RESONANCE_ENGINE = get_resonance_engine()
     RESONANCE_AVAILABLE = True
@@ -75,7 +75,7 @@ except ImportError as e:
 
 # Import Autonomy Scorer for agent self-assessment
 try:
-    from apps.backend.services.content_quality_scorer import AgentAutonomyScorer, AutonomyScore, get_autonomy_scorer
+    # from helix_core.services.content_quality_scorer import AgentAutonomyScorer, AutonomyScore, get_autonomy_scorer
 
     _AUTONOMY_SCORER = get_autonomy_scorer()
     AUTONOMY_SCORING_AVAILABLE = True

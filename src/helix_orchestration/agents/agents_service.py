@@ -64,12 +64,12 @@ logger = logging.getLogger(__name__)
 logger.propagate = True
 
 # Import base agent class (use relative import to avoid circular dependency)
-from apps.backend.agents.agents_base import HelixAgent  # noqa: E402
-from apps.backend.security.enhanced_kavach import EnhancedKavach  # noqa: E402
+# from helix_core.agents.agents_base import HelixAgent  # noqa: E402
+# from helix_core.security.enhanced_kavach import EnhancedKavach  # noqa: E402
 
 # Import orchestrator getter (use relative import)
 try:
-    from apps.backend.agents.agent_orchestrator import get_orchestrator
+    # from helix_core.agents.agent_orchestrator import get_orchestrator
 except ImportError:
 
     def get_orchestrator():
@@ -78,7 +78,7 @@ except ImportError:
 
 # Import MemoryRootAgent
 try:
-    from apps.backend.agents.memory_root import MemoryRootAgent
+    # from helix_core.agents.memory_root import MemoryRootAgent
 except ImportError:
     MemoryRootAgent = None
 
@@ -1358,7 +1358,7 @@ class Helix(HelixAgent):
             cmd = [
                 "python",
                 "-c",
-                "from apps.backend.agents import AGENTS, Shadow; import asyncio; asyncio.run(AGENTS['Shadow'].archive_collective(AGENTS))",
+                "# from helix_core.agents import AGENTS, Shadow; import asyncio; asyncio.run(AGENTS['Shadow'].archive_collective(AGENTS))",
             ]
         elif action == "execute_direct":
             # SECURITY: Disabled - arbitrary command execution is a security risk
