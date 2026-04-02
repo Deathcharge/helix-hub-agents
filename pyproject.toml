@@ -44,6 +44,8 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "structlog>=23.0.0",
     "tenacity>=8.0.0",
+    "click>=8.0.0",
+    "rich>=13.0.0",
 ]
 
 [project.optional-dependencies]
@@ -62,6 +64,9 @@ docs = [
     "sphinx-rtd-theme>=1.3.0",
     "sphinx-autodoc-typehints>=1.24.0",
 ]
+
+[project.scripts]
+helix-orchestration = "helix_agent_orchestration.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/Deathcharge/helix-hub-agents"
