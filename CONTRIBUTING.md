@@ -1,272 +1,404 @@
-# Contributing to Helix Orchestration
+# Contributing to Helix Collective
 
-Thank you for your interest in contributing! This document provides guidelines and instructions for contributing to the Helix Orchestration project.
+Thank you for your interest in contributing to the Helix Collective! We welcome contributions from developers, researchers, and enthusiasts. This guide will help you get started.
 
 ## Code of Conduct
 
-We are committed to providing a welcoming and inspiring community for all. Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
+We are committed to providing a welcoming and inclusive environment for all contributors. Please read our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before contributing.
 
-## How to Contribute
+## Getting Started
 
-### Reporting Bugs
+### 1. Fork and Clone
 
-Before creating bug reports, please check the issue list as you might find out that you don't need to create one. When you are creating a bug report, please include as many details as possible:
+```bash
+# Fork the repository on GitHub
+git clone https://github.com/YOUR_USERNAME/repository-name.git
+cd repository-name
+git remote add upstream https://github.com/Deathcharge/repository-name.git
+```
 
-- **Use a clear and descriptive title**
-- **Describe the exact steps which reproduce the problem**
-- **Provide specific examples to demonstrate the steps**
-- **Describe the behavior you observed after following the steps**
-- **Explain which behavior you expected to see instead and why**
-- **Include screenshots and animated GIFs if possible**
-- **Include your environment details** (OS, Python version, etc.)
+### 2. Set Up Development Environment
 
-### Suggesting Enhancements
+```bash
+# Create a virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-Enhancement suggestions are tracked as GitHub issues. When creating an enhancement suggestion, please include:
+# Install dependencies
+pip install -e ".[dev]"
+```
 
-- **Use a clear and descriptive title**
-- **Provide a step-by-step description of the suggested enhancement**
-- **Provide specific examples to demonstrate the steps**
-- **Describe the current behavior and the expected behavior**
-- **Explain why this enhancement would be useful**
+### 3. Create a Feature Branch
 
-### Pull Requests
+```bash
+git checkout -b feature/your-feature-name
+# or for bug fixes:
+git checkout -b fix/issue-description
+```
 
-- Fill in the required template
-- Follow the Python styleguides
-- Include appropriate test cases
-- End all files with a newline
-- Avoid platform-dependent code
+## Development Workflow
 
-## Development Setup
+### Code Style
 
-### Prerequisites
+We follow **PEP 8** and use automated tools for consistency:
 
-- Python 3.11+
-- Git
-- pip or uv
+#### Formatting with Black
 
-### Local Development
+```bash
+black .
+```
 
-1. **Fork the repository**
-   ```bash
-   gh repo fork Deathcharge/helix-hub-agents --clone
-   ```
+#### Linting with Flake8
 
-2. **Create a virtual environment**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+```bash
+flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+```
 
-3. **Install in development mode**
-   ```bash
-   pip install -e ".[dev]"
-   ```
+#### Type Checking with Mypy
 
-4. **Install pre-commit hooks**
-   ```bash
-   pre-commit install
-   ```
-
-5. **Create a feature branch**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
+```bash
+mypy . --ignore-missing-imports
+```
 
 ### Running Tests
 
 ```bash
 # Run all tests
-pytest
+pytest tests/
 
 # Run with coverage
-pytest --cov=src/helix_orchestration
+pytest tests/ -v --cov=. --cov-report=html
 
 # Run specific test file
-pytest tests/test_agent_orchestrator.py
+pytest tests/test_module.py -v
 
-# Run with verbose output
-pytest -v
+# Run with markers
+pytest -m "not slow" tests/
 ```
 
-### Code Quality
+### Writing Tests
 
-```bash
-# Format code with black
-black src/ tests/
-
-# Lint with ruff
-ruff check src/ tests/
-
-# Type checking with mypy
-mypy src/
-
-# Run all checks
-pre-commit run --all-files
-```
-
-## Styleguides
-
-### Python Style
-
-- Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/)
-- Use type hints for all function signatures
-- Maximum line length: 100 characters
-- Use docstrings for all public functions and classes
-
-### Example Function
+- Place tests in the `tests/` directory
+- Use descriptive test names: `test_function_does_something_specific()`
+- Aim for 80%+ code coverage
+- Use fixtures for common setup
 
 ```python
-def orchestrate_agents(
-    agents: List[Agent],
-    task: str,
-    context: Optional[Dict[str, Any]] = None,
-    timeout: int = 300
-) -> OrchestratedResult:
-    """
-    Orchestrate multiple agents to complete a task.
-    
-    Args:
-        agents: List of agents to coordinate
-        task: Task description
-        context: Optional context data
-        timeout: Execution timeout in seconds
-        
-    Returns:
-        OrchestratedResult containing execution results and metrics
-        
-    Raises:
-        TimeoutError: If execution exceeds timeout
-        ValueError: If task or agents are invalid
-    """
-    # Implementation
-    pass
-```
+import pytest
 
-### Commit Messages
+def test_example_function():
+    """Test that example_function returns expected output."""
+    result = example_function(input_value)
+    assert result == expected_output
 
-- Use the present tense ("Add feature" not "Added feature")
-- Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-- Limit the first line to 72 characters or less
-- Reference issues and pull requests liberally after the first line
+@pytest.fixture
+def sample_data():
+    """Fixture providing sample data for tests."""
+    return {"key": "value"}
 
-Example:
-```
-Add agent emergence simulation
-
-- Implement predictive modeling for agent behavior
-- Add tests for emergence patterns
-- Update documentation with examples
-
-Fixes #123
+def test_with_fixture(sample_data):
+    """Test using a fixture."""
+    assert sample_data["key"] == "value"
 ```
 
 ### Documentation
 
-- Use clear, concise language
-- Include code examples where appropriate
+- Add docstrings to all public functions and classes
+- Use Google-style docstrings
 - Update README.md if adding new features
-- Add docstrings to all public APIs
-- Keep documentation up-to-date with code changes
-
-## Testing Guidelines
-
-### Test Structure
+- Add examples for complex functionality
 
 ```python
-import pytest
-from helix_orchestration import AgentOrchestrator
-
-class TestAgentOrchestrator:
-    """Test suite for AgentOrchestrator"""
+def process_data(input_data: dict, timeout: int = 30) -> dict:
+    """Process input data with optional timeout.
     
-    @pytest.fixture
-    def orchestrator(self):
-        """Fixture providing orchestrator instance"""
-        return AgentOrchestrator()
+    Longer description of what this function does and any
+    important details about its behavior.
     
-    def test_agent_registration(self, orchestrator):
-        """Test that agents can be registered"""
-        agent = orchestrator.registry.get_agent("kael")
-        assert agent is not None
-        assert agent.name == "kael"
-    
-    @pytest.mark.asyncio
-    async def test_async_orchestration(self, orchestrator):
-        """Test async orchestration"""
-        result = await orchestrator.execute_async(
-            agents=["kael", "lumina"],
-            task="test_task"
-        )
-        assert result.success
+    Args:
+        input_data: Dictionary containing the data to process.
+        timeout: Maximum time in seconds to wait. Defaults to 30.
+        
+    Returns:
+        Dictionary containing processed results with keys:
+        - 'status': 'success' or 'error'
+        - 'data': Processed data (if successful)
+        - 'error': Error message (if failed)
+        
+    Raises:
+        ValueError: If input_data is empty or invalid.
+        TimeoutError: If processing exceeds timeout.
+        
+    Example:
+        >>> result = process_data({'key': 'value'})
+        >>> print(result['status'])
+        'success'
+    """
+    pass
 ```
 
-### Coverage Requirements
+## Commit Guidelines
 
-- Aim for >80% code coverage
-- All public APIs must have tests
-- Test both success and failure cases
-- Include edge cases and boundary conditions
+### Commit Message Format
 
-## Documentation
+We follow conventional commits for clear, semantic commit messages:
 
-### Adding Documentation
+```
+<type>(<scope>): <subject>
 
-1. Create a new file in `docs/` directory
-2. Use Markdown format
-3. Include code examples
-4. Update `docs/index.md` with link to new documentation
+<body>
 
-### Documentation Structure
+<footer>
+```
 
-```markdown
-# Feature Name
+### Types
 
-## Overview
-Brief description of the feature.
+- **feat**: A new feature
+- **fix**: A bug fix
+- **docs**: Documentation only changes
+- **style**: Changes that don't affect code meaning (formatting, missing semicolons, etc.)
+- **refactor**: Code change that neither fixes a bug nor adds a feature
+- **perf**: Code change that improves performance
+- **test**: Adding missing tests or correcting existing tests
+- **ci**: Changes to CI/CD configuration files and scripts
+- **chore**: Changes to build process, dependencies, or tooling
 
-## Use Cases
-When and why to use this feature.
+### Examples
 
-## Examples
+```
+feat(llm-bridge): add support for Claude 3 models
 
-### Basic Example
+- Implement Claude 3 provider integration
+- Add streaming support for long responses
+- Update documentation with examples
+
+Closes #123
+```
+
+```
+fix(agent-swarm): resolve memory leak in agent coordinator
+
+Memory was not being properly released when agents completed tasks.
+This was causing the coordinator to consume increasing amounts of memory
+over time.
+
+Fixes #456
+```
+
+## Pull Request Process
+
+### Before Submitting
+
+1. **Update from upstream**
+   ```bash
+   git fetch upstream
+   git rebase upstream/main
+   ```
+
+2. **Run all checks locally**
+   ```bash
+   black .
+   flake8 .
+   mypy .
+   pytest tests/ -v --cov=.
+   ```
+
+3. **Ensure tests pass**
+   - All existing tests must pass
+   - Add new tests for new functionality
+   - Maintain or improve code coverage
+
+### Submitting a PR
+
+1. Push your branch to your fork
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+2. Create a Pull Request on GitHub with:
+   - Clear title describing the change
+   - Description of what changed and why
+   - Reference to related issues (e.g., "Closes #123")
+   - Screenshots for UI changes (if applicable)
+
+3. PR Template
+   ```markdown
+   ## Description
+   Brief description of changes
+   
+   ## Type of Change
+   - [ ] Bug fix
+   - [ ] New feature
+   - [ ] Breaking change
+   - [ ] Documentation update
+   
+   ## Testing
+   - [ ] Unit tests added/updated
+   - [ ] Integration tests added/updated
+   - [ ] All tests passing
+   
+   ## Checklist
+   - [ ] Code follows style guidelines
+   - [ ] Self-review completed
+   - [ ] Comments added for complex logic
+   - [ ] Documentation updated
+   - [ ] No new warnings generated
+   
+   ## Related Issues
+   Closes #(issue number)
+   ```
+
+### PR Review
+
+- Maintainers will review your PR
+- Respond to feedback and make requested changes
+- Push additional commits to the same branch
+- Once approved, your PR will be merged
+
+## Reporting Issues
+
+### Bug Reports
+
+Include:
+- Clear description of the bug
+- Steps to reproduce
+- Expected behavior
+- Actual behavior
+- Python version and OS
+- Relevant code or error messages
+- Screenshots (if applicable)
+
+### Feature Requests
+
+Include:
+- Clear description of the feature
+- Use cases and motivation
+- Proposed implementation (if you have ideas)
+- Potential drawbacks or considerations
+
+## Integration with Helix Ecosystem
+
+When contributing to a Helix repository:
+
+1. **Understand the ecosystem**: Familiarize yourself with how your repo integrates with others
+2. **Maintain compatibility**: Don't break existing APIs without discussion
+3. **Follow patterns**: Use the same patterns and conventions as other Helix repos
+4. **Test integration**: Test your changes with related repositories if applicable
+
+### Key Repositories
+
+- **helix-core**: LLM reasoning and provider routing
+- **helix-agent-swarm**: Multi-agent orchestration
+- **routine-engine**: Workflow automation
+- **helix-web-os**: Browser-based AI service
+- **helix-discord-bot**: Discord integration
+
+## Development Tips
+
+### Debugging
+
 ```python
-# Code example
+import logging
+
+# Enable debug logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+# Use in your code
+logger.debug(f"Variable value: {variable}")
+logger.info("Operation completed")
+logger.warning("Potential issue detected")
+logger.error("An error occurred", exc_info=True)
 ```
 
-### Advanced Example
+### Performance Profiling
+
 ```python
-# More complex example
+import cProfile
+import pstats
+
+profiler = cProfile.Profile()
+profiler.enable()
+
+# Your code here
+function_to_profile()
+
+profiler.disable()
+stats = pstats.Stats(profiler)
+stats.sort_stats('cumulative')
+stats.print_stats(10)  # Print top 10 functions
 ```
 
-## API Reference
-Detailed API documentation.
+### Type Checking
 
-## See Also
-Links to related documentation.
+```python
+from typing import List, Dict, Optional, Union
+
+def process_items(
+    items: List[str],
+    config: Optional[Dict[str, Union[str, int]]] = None
+) -> Dict[str, List[str]]:
+    """Process items with optional configuration."""
+    pass
 ```
+
+## Documentation Standards
+
+### README Structure
+
+- Overview and features
+- Installation instructions
+- Quick start guide
+- Architecture overview
+- Integration with Helix ecosystem
+- Development setup
+- Contributing guidelines
+- License
+
+### API Documentation
+
+- Docstrings for all public APIs
+- Type hints on all functions
+- Examples for complex functionality
+- Architecture diagrams where helpful
 
 ## Release Process
 
-1. Update version in `pyproject.toml`
-2. Update `CHANGELOG.md`
-3. Create a release branch: `git checkout -b release/v1.0.0`
-4. Create a pull request
-5. After merge, create a GitHub release
-6. Package will be automatically published to PyPI
+1. Update version number in `__init__.py` or `setup.py`
+2. Update CHANGELOG.md with changes
+3. Create a git tag: `git tag v1.0.0`
+4. Push tag: `git push origin v1.0.0`
+5. Create GitHub release with changelog
 
-## Questions?
+## Getting Help
 
-- Open an issue with the `question` label
-- Start a discussion in GitHub Discussions
-- Check existing documentation
+- **Questions**: Open a GitHub Discussion
+- **Bugs**: Open a GitHub Issue with bug report template
+- **Ideas**: Open a GitHub Discussion or Issue with feature request template
+- **Chat**: Join our community Discord (link in README)
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the Apache License 2.0.
+By contributing, you agree that your contributions will be licensed under the same license as the project (typically MIT).
+
+## Recognition
+
+Contributors are recognized in:
+- CONTRIBUTORS.md file
+- GitHub contributors page
+- Release notes (for significant contributions)
 
 ---
 
-Thank you for contributing to Helix Orchestration! 🎉
+## Additional Resources
+
+- [Python Style Guide (PEP 8)](https://www.python.org/dev/peps/pep-0008/)
+- [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
+- [Git Commit Best Practices](https://chris.beams.io/posts/git-commit/)
+- [Semantic Versioning](https://semver.org/)
+
+---
+
+**Thank you for contributing to Helix Collective!** 🚀
+
+Your contributions help make this project better for everyone.
